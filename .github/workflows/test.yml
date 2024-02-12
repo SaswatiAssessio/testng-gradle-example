@@ -1,0 +1,57 @@
+name: Test Run
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions: write-all
+
+jobs:
+  init:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+
+    outputs:
+      build: ${{ steps.changed-files.outputs.any_changed }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+  build:
+    needs: init
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GHA_REPO_ACCESS }}
+          submodules: true
+
+      - name: Set session_name variable
+        run: echo SESSION_NAME=${GITHUB_WORKFLOW}-${GITHUB_RUN_NUMBER}  | tr -d  ' ' >> $GITHUB_ENV
+
+      - name: Check Last Workflow Run
+        if: github.event_name == 'push'
+        env:
+          REPOSITORY_DISPATCH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -s \
+          -H 'Accept: application/vnd.github.v3+json' \
+          -H "Authorization: token ${REPOSITORY_DISPATCH_TOKEN}" \
+          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1" | jq -r '.workflow_runs[0].jobs_url'
+
+      - name: Trigger
+        if: ${{ github.event_name == 'push' }}
+        run: |
+          curl -X POST \
+          -H 'Accept: application/vnd.github.v3+json' \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          --data '{"event_type": "printpr"}' \
+          https://github.com/SaswatiAssessio/Dest_repo/dispatches
