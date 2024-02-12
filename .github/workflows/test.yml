@@ -27,7 +27,7 @@ jobs:
           curl -s \
           -H 'Accept: application/vnd.github.v3+json' \
           -H "Authorization: token ${REPOSITORY_DISPATCH_TOKEN}" \
-          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1" | jq -r '.workflow_runs[0].jobs_url'
+          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1"
 
       - name: Trigger
         if: ${{ github.event_name == 'push' }}
