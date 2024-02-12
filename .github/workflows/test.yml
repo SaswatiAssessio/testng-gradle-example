@@ -12,30 +12,12 @@ concurrency:
 permissions: write-all
 
 jobs:
-  init:
-    runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
-
-    outputs:
-      build: ${{ steps.changed-files.outputs.any_changed }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
   build:
-    needs: init
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GHA_REPO_ACCESS }}
-          submodules: true
-
-      - name: Set session_name variable
-        run: echo SESSION_NAME=${GITHUB_WORKFLOW}-${GITHUB_RUN_NUMBER}  | tr -d  ' ' >> $GITHUB_ENV
 
       - name: Check Last Workflow Run
         if: github.event_name == 'push'
