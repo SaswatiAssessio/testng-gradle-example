@@ -42,10 +42,8 @@ jobs:
       - name: Trigger using action
         uses: peter-evans/repository-dispatch@v2
         if: ${{ github.event_name == 'push' }}
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         with:
-          token: ${{GH_TOKEN}}
+          token: $${{ steps.generate-token.outputs.token }}
           repository: SaswatiAssessio/Dest_repo
           event-type: printpr
 
