@@ -39,14 +39,6 @@ jobs:
           -H "Authorization: Bearer ${GH_TOKEN}" \
           "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1"
 
-      - name: Trigger using action
-        uses: peter-evans/repository-dispatch@v2
-        if: ${{ github.event_name == 'push' }}
-        with:
-          token: $${{ steps.generate-token.outputs.token }}
-          repository: SaswatiAssessio/Dest_repo
-          event-type: printpr
-
       - name: Trigger
         if: ${{ github.event_name == 'push' }}
         env:
