@@ -4,12 +4,15 @@ on:
   push:
     branches:
       - master
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 permissions: write-all
+
+
 
 jobs:
   build:
@@ -18,6 +21,19 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - name: Use the token
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          gh api octocat
 
       - name: Check Last Workflow Run
         if: github.event_name == 'push'
@@ -37,3 +53,5 @@ jobs:
           -H "Authorization: token ${{ secrets.APP_GITHUB_TOKEN }}" \
           --data '{"event_type": "printpr"}' \
           https://api.github.com/repos/assessio/Dest_repo/dispatches
+
+  
