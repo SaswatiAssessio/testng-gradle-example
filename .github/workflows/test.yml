@@ -22,7 +22,7 @@ jobs:
       - name: Check Last Workflow Run
         if: github.event_name == 'push'
         env:
-          REPOSITORY_DISPATCH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY_DISPATCH_TOKEN: ${{ secrets.APP_GITHUB_TOKEN }}
         run: |
           curl -s \
           -H 'Accept: application/vnd.github.v3+json' \
@@ -34,6 +34,6 @@ jobs:
         run: |
           curl -X POST \
           -H 'Accept: application/vnd.github.v3+json' \
-          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -H "Authorization: token ${{ secrets.APP_GITHUB_TOKEN }}" \
           --data '{"event_type": "printpr"}' \
           https://api.github.com/repos/assessio/Dest_repo/dispatches
