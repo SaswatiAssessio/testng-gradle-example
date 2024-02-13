@@ -54,7 +54,7 @@ jobs:
           -H 'Accept: application/vnd.github.v3+json' \
           -H "Authorization: Bearer ${GH_TOKEN}" \
           --data '{"event_type": "printpr"}' \
-          https://api.github.com/repos/assessio/Dest_repo/dispatches
+          https://api.github.com/repos/SaswatiAssessio/Dest_repo/dispatches
         
 
   
