@@ -45,7 +45,7 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         with:
-          token: ${GH_TOKEN}
+          token: ${{GH_TOKEN}}
           repository: SaswatiAssessio/Dest_repo
           event-type: printpr
 
