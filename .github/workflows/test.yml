@@ -47,7 +47,7 @@ jobs:
           curl -L \
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: Bearer ${{ secrets.CLIENT_SECRET }}" \
+          -H "Authorization: token ${{ secrets.CLIENT_SECRET }}" \
           https://api.github.com/repos/SaswatiAssessio/Dest_repo/dispatches \
           -d '{"event_type":"printpr"}'
 
