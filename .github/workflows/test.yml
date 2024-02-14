@@ -29,33 +29,20 @@ jobs:
         run: |
           gh api octocat
 
-      - name: Check Last Workflow Run
+#      - name: Check repo main branch updates
+#        if: github.event_name == 'push'
+#        env:
+#          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+#        run: |
+#          curl -s \
+#          -H 'Accept: application/vnd.github.v3+json' \
+#          -H "Authorization: Bearer ${GH_TOKEN}" \
+#          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1"
+
+      - name: Repository Dispatch
         if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-        run: |
-          curl -s \
-          -H 'Accept: application/vnd.github.v3+json' \
-          -H "Authorization: Bearer ${GH_TOKEN}" \
-          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1"
-
-      - name: Generate a new token
-        id: new-token
-        uses: actions/create-github-app-token@v1
-        with:
-          app-id: 827128
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-
-      - name: Use the token
-        env:
-          GH_TOKEN: ${{ steps.new-token.outputs.token }}
-        run: |
-          gh api octocat
-
-      - name: Trigger
-        if: github.event_name == 'push'
-        env:
-          GH_TOKEN: ${{ steps.new-token.outputs.token }}
         run: |
           curl -L \
           -X POST \
