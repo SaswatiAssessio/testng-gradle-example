@@ -48,7 +48,7 @@ jobs:
 
       - name: Use the token
         env:
-          GH_NEW_TOKEN: ${{ steps.new-token.outputs.token }}
+          GH_TOKEN: ${{ steps.new-token.outputs.token }}
         run: |
           gh api octocat
 
@@ -60,7 +60,7 @@ jobs:
           curl -L \
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: Bearer ${GH_NEW_TOKEN}" \
+          -H "Authorization: Bearer ${GH_TOKEN}" \
           https://api.github.com/repos/SaswatiAssessio/Dest_repo/dispatches \
           -d '{"event_type":"printpr"}'
 
