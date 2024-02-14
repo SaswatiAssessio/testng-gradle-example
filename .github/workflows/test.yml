@@ -40,7 +40,7 @@ jobs:
           "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1"
 
       - name: Trigger
-        if: ${{ github.event_name == 'push' }}
+        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
