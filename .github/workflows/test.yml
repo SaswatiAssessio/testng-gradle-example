@@ -30,7 +30,6 @@ jobs:
           gh api octocat
 
       - name: Check repo commits
-        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
@@ -40,7 +39,6 @@ jobs:
           "https://api.github.com/repos/SaswatiAssessio/Dest_repo/git/commits"
 
       - name: Repository Dispatch
-        if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
