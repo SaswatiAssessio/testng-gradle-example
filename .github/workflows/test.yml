@@ -35,7 +35,7 @@ jobs:
           curl -s \
           -H 'Accept: application/vnd.github.v3+json' \
           -H "Authorization: Bearer ${GH_TOKEN}" \
-          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example?branch=main&per_page=1"
+          "https://api.github.com/repos/SaswatiAssessio/Dest_repo/git/commits"
 
       - name: Repository Dispatch
         if: github.event_name == 'push'
@@ -45,7 +45,7 @@ jobs:
           curl -L \
           -X POST \
           -H "Accept: application/vnd.github.v3+json" \
-          -H "Authorization: token ${{ secrets.CLIENT_SECRET }}" \
+          -H "Authorization: Bearer ${GH_TOKEN}" \
           https://api.github.com/repos/SaswatiAssessio/Dest_repo/dispatches \
           -d '{"event_type":"printpr"}'
 
