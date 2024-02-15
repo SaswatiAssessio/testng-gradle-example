@@ -27,7 +27,7 @@ jobs:
         run: |
           gh api octocat
 
-      - name: Check repo main branch updates
+      - name: Check repo commits
         if: github.event_name == 'push'
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
