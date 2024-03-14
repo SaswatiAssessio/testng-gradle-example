@@ -12,6 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Fix up git URLs for submodules
+        run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
