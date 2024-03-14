@@ -10,4 +10,4 @@ updates:
     schedule:
       interval: "weekly"
       day: "thursday"
-      time: "12:05"
+      time: "12:07"
