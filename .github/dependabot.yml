@@ -5,9 +5,9 @@
 
 version: 2
 updates:
-  - package-ecosystem: "gradle" # See documentation for possible values
+  - package-ecosystem: "yarn" # See documentation for possible values
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
       day: "thursday"
-      time: "12:07"
+      time: "13:19"
