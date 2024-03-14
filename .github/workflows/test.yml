@@ -11,21 +11,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-
-#      - name: Generate a token
-#        id: generate-token
-#        uses: actions/create-github-app-token@v1
-#        with:
-#          app-id: ${{ vars.APP_ID }}
-#          private-key: ${{ secrets.APP_PRIVATE_KEY }}
-#          owner: ${{ github.repository_owner }}
-#          repositories: "Dest_repo,testng-gradle-example"
-
-#      - name: Use the token
-#        env:
-#          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-#        run: |
-#          gh api octocat
-
-
-  
+      - name: Run script
+        run: |
+          ls -la
