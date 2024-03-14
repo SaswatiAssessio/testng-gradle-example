@@ -17,9 +17,9 @@ jobs:
 
       - name: Checkout
         uses: actions/checkout@v4
-#        with:
+        with:
 #          token: ${{ secrets.DEPENDABOT_POC }}
-#          submodules: true
+          submodules: true
 
       - name: Run script
         run: |
