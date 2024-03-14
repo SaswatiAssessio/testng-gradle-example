@@ -1,3 +1,4 @@
 [submodule "Dest_repo"]
 	path = Dest_repo
 	url = git@github.com:SaswatiAssessio/Dest_repo.git
+	branch = main
