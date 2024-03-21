@@ -25,6 +25,7 @@ function check_dependent_workflows() {
         -H 'Accept: application/vnd.github.v3+json' \
         -H "Authorization: Bearer ${GH_TOKEN}" \
         "https://api.github.com/repos/SaswatiAssessio/$r?branch=master&per_page=1" | jq -r '.workflow_runs[0].jobs_url' )
+    printf "${WORKFLOW_JOBS_URL}\n"
     # Query Github API for status of the 'Check Workflow Dependencies' step from the 'build' job
     WORKFLOW_STEP_STATUS=$(curl -s \
         -H 'Accept: application/vnd.github.v3+json' \
