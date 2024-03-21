@@ -33,4 +33,4 @@ jobs:
         env:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          source .github/workflows/scripts/release_functions.sh; check_dependent_workflows test.yml
+          source .github/workflows/scripts/release_functions.sh; check_dependent_workflows testagain.yml
