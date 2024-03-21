@@ -24,3 +24,6 @@ jobs:
       - name: Run script
         run: |
           ls -la auth-app.js
+
+      - name: Pause
+        run: sleep 30
