@@ -12,18 +12,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-#      - name: Fix up git URLs for submodules
-#        run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
+
+      - name: Pause
+        run: sleep 30
+
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.WORKFLOWS_APP_ID }}
+          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      #      - name: Fix up git URLs for submodules
+      #        run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
 
       - name: Checkout
         uses: actions/checkout@v4
         with:
-#          token: ${{ secrets.DEPENDABOT_POC }}
+          token: ${{ steps.generate-token.outputs.token }}
           submodules: true
 
       - name: Run script
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
-          ls -la auth-app.js
-
-      - name: Pause
-        run: sleep 30
+          source .github/workflows/scripts/release_functions.sh; check_dependent_workflows test.yml
