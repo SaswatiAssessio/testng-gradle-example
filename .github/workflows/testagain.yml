@@ -31,7 +31,11 @@ jobs:
           GH_TOKEN: ${{ steps.generate-token.outputs.token }}
         run: |
           source .github/workflows/scripts/release_functions.sh; check_dependent_workflows testagain.yml
+          WORKFLOW_JOBS_URL=$(curl -s \
+          -H 'Accept: application/vnd.github.v3+json' \
+          -H "Authorization: Bearer ${GH_TOKEN}" \
+          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example/actions/workflows/test.yml/runs?branch=master&per_page=1" | jq -r '.workflow_runs[0].jobs_url')
           curl -s \
           -H 'Accept: application/vnd.github.v3+json' \
           -H "Authorization: Bearer ${GH_TOKEN}" \
-          "https://api.github.com/repos/SaswatiAssessio/testng-gradle-example/actions/workflows/test.yml/runs?branch=master&per_page=1" | jq -r '.workflow_runs[0].jobs_url'
+          "$WORKFLOW_JOBS_URL" | jq -r '.jobs[] | select(.name == "build") | .steps[] | select(.name == "Check Workflow Dependencies") | .status'
