@@ -1,0 +1,36 @@
+name: Test Run
+
+on:
+  push:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate a token
+        id: generate-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.WORKFLOWS_APP_ID }}
+          private-key: ${{ secrets.WORKFLOWS_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+
+      #      - name: Fix up git URLs for submodules
+      #        run: echo -e '[url "https://github.com/"]\n  insteadOf = "git@github.com:"' >> ~/.gitconfig
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          submodules: true
+
+      - name: Run script
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+        run: |
+          source .github/workflows/scripts/release_functions.sh; check_dependent_workflows test.yml
