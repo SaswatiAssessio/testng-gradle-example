@@ -21,7 +21,7 @@ sourceSets {
 }
 
 ext {
-    testNgVersion = "7.1.0"
+    testNgVersion = "7.10.1"
 }
 
 dependencies {
